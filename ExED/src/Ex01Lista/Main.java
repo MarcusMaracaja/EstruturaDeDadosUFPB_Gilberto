@@ -60,6 +60,7 @@ public class Main {
                     }
                     break;
                 case 3:
+                    
                     System.out.println("O Vetor atual é: " + vetor);
                     System.out.print("Escolha um índice: ");
                     int num = user.nextInt();                                     

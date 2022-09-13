@@ -14,7 +14,7 @@ import java.util.Arrays;
 ///com int
 public class Vetor {
 
-    private final int[] elementos; //declaração do vetor, todos os elementos do vetor, pode ser int
+    private int[] elementos; //declaração do vetor, todos os elementos do vetor, pode ser int
     private int tamanho; //controla o tamanho total do vetor
 
     //construtor
@@ -25,25 +25,29 @@ public class Vetor {
     }
 
     public void adiciona(int elemento) {
+       aumentaCapacidade();
         if (tamanho < this.elementos.length) { //verifica se o vetor já está no ultimo elemento
             elementos[tamanho] = elemento;
             tamanho++;
+            
         } else {
             System.out.println("Vetor Cheio!");
         }
     }
 
     public void add(int pos, int elemento) {
+        
         if (!(pos >= 0 && pos < tamanho)) {
             throw new IllegalArgumentException("ERROS");
         }
         //shift
         //tamanho++;  
-        this.aumentaCapacidade();
-        for (int i = this.tamanho - 1; i > pos; i--) {
-            this.elementos[i] = this.elementos[i - 1];
+        aumentaCapacidade();
+        for (int i = this.tamanho - 1; i >= pos; i--) {
+            this.elementos[i+1] = this.elementos[i];
 
         }
+        
         this.tamanho++;
         this.elementos[pos] = elemento;
 
@@ -54,10 +58,12 @@ public class Vetor {
         if (!(pos >= 0 && pos < tamanho)) {
             throw new IllegalArgumentException("ERROS");
         }
-        //shift        
-        for (int i = pos; i == tamanho-1; i++) {
+        //shift
+
+        for (int i = pos -1; i < tamanho-1; i++) {
             this.elementos[i] = this.elementos[i + 1];
         }
+        reduzCapacidade();
         this.tamanho--;
         
     }
@@ -104,10 +110,24 @@ public class Vetor {
     }
 
     private void aumentaCapacidade() {
-        if (this.tamanho == this.elementos.length) {
-            int[] dados = new int[this.elementos.length + 1];
-            System.arraycopy(this.elementos, 0, dados, 0, elementos.length);
-            Arrays.equals(elementos, dados);
+        
+       if (this.tamanho == this.elementos.length) {
+       int[] dados = new int[this.elementos.length + 1];
+                for(int i = 0;i<this.elementos.length;i++){
+                    dados[i] = this.elementos[i];
+                }elementos = dados;
         }
+        
+    }
+        private void reduzCapacidade() {
+        
+       if (this.tamanho == this.elementos.length) {
+       int[] dados2 = new int[this.elementos.length - 1];
+                for(int i = elementos.length;i < elementos.length ;i--){
+                    dados2[i] = this.elementos[i];
+                }
+                elementos = dados2;
+        }
+        
     }
 }
